@@ -1,8 +1,9 @@
 import { useEffect } from "react"
 import { useSession } from "next-auth/react"
+import { Avatar } from "@nextui-org/react"
 
-export default function Page() {
-  const { data: session, status, update } = useSession()
+export default function Profile() {
+  const { data: session, update } = useSession()
 
   // Polling the session every 1 hour
   useEffect(() => {
@@ -22,5 +23,9 @@ export default function Page() {
       window.removeEventListener("visibilitychange", visibilityHandler, false)
   }, [update])
 
-  return <pre>{JSON.stringify(session, null, 2)}</pre>
+  return (
+    <div>
+      <Avatar isBordered color="success" radius="sm" src={session?.user?.image || "https://images.unsplash.com/broken"} />
+    </div>
+  )
 }
